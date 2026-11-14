@@ -19,6 +19,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: ${{ vars.MOUSELINK_VERCEL_AUTODEPLOY == 'true' }}
     runs-on: ubuntu-latest
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
