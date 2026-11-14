@@ -1,0 +1,4 @@
+# pynput is the optional macOS/Linux input adapter.
+# websocket-client enables the encrypted internet relay on every desktop platform.
+pynput>=1.7.7,<2
+websocket-client>=1.8,<2

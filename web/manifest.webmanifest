@@ -1,0 +1,11 @@
+{
+  "name": "MouseLink — Phone Mouse",
+  "short_name": "MouseLink",
+  "description": "Use your phone as a touchpad for your computer.",
+  "start_url": "/remote",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#111711",
+  "theme_color": "#111711",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

@@ -1,0 +1,119 @@
+name: Build MouseLink downloads
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  desktop:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: windows-latest
+            target: windows
+            asset: MouseLink-Windows-x64.exe
+          - runner: macos-15
+            target: macos-arm64
+            asset: MouseLink-macOS-arm64.zip
+          - runner: macos-15-intel
+            target: macos-intel
+            asset: MouseLink-macOS-intel.zip
+          - runner: ubuntu-latest
+            target: linux
+            asset: MouseLink-Linux-x64.tar.gz
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install desktop dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt pyinstaller
+      - name: Build Windows desktop app
+        if: matrix.target == 'windows'
+        run: pyinstaller --noconfirm --clean --onefile --name MouseLink-Windows-x64 --add-data "web;web" server.py
+      - name: Build macOS desktop app
+        if: startsWith(matrix.target, 'macos-')
+        run: pyinstaller --noconfirm --clean --onefile --name MouseLink-${{ matrix.target }} --add-data "web:web" server.py
+      - name: Package macOS download
+        if: startsWith(matrix.target, 'macos-')
+        shell: bash
+        run: |
+          mkdir -p package release
+          cp "dist/MouseLink-${{ matrix.target }}" package/
+          cp "packaging/start-${{ matrix.target }}.command" "package/Start MouseLink.command"
+          chmod +x "package/Start MouseLink.command"
+          cd package
+          zip -9 "../release/${{ matrix.asset }}" "MouseLink-${{ matrix.target }}" "Start MouseLink.command"
+      - name: Build Linux desktop app
+        if: matrix.target == 'linux'
+        run: pyinstaller --noconfirm --clean --onefile --name MouseLink-Linux-x64 --add-data "web:web" server.py
+      - name: Package Windows download
+        if: matrix.target == 'windows'
+        shell: pwsh
+        run: New-Item -ItemType Directory -Force release | Out-Null; Copy-Item dist/MouseLink-Windows-x64.exe release/
+      - name: Package Linux download
+        if: matrix.target == 'linux'
+        shell: bash
+        run: |
+          mkdir -p release
+          cp dist/MouseLink-Linux-x64 release/
+          cp packaging/start-linux.sh release/
+          chmod +x release/start-linux.sh
+          tar -czf release/MouseLink-Linux-x64.tar.gz -C release MouseLink-Linux-x64 start-linux.sh
+      - name: Upload desktop artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.target }}
+          path: release/*
+          if-no-files-found: error
+          retention-days: 5
+
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.11.1"
+      - name: Build Android beta APK
+        working-directory: android
+        run: gradle --no-daemon :app:assembleDebug
+      - name: Stage Android APK
+        run: |
+          mkdir -p release
+          cp android/app/build/outputs/apk/debug/app-debug.apk release/MouseLink-Android.apk
+      - name: Upload Android artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-android
+          path: release/MouseLink-Android.apk
+          if-no-files-found: error
+          retention-days: 5
+
+  publish:
+    needs: [desktop, android]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          path: release
+          merge-multiple: true
+      - name: Publish GitHub release files
+        uses: softprops/action-gh-release@v3
+        with:
+          generate_release_notes: true
+          files: release/*
+          fail_on_unmatched_files: true

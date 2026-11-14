@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#111711" />
+    <meta name="description" content="Turn your phone into a wireless touchpad for your computer." />
+    <title>MouseLink — phone as a mouse</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/app.css" />
+  </head>
+  <body data-mode="host">
+    <div class="host-app" id="host-app">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="MouseLink home">
+          <span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 4.5a3.5 3.5 0 0 1 3.5-3.5h3v12.5H8V4.5Zm8.5-3.5h4A3.5 3.5 0 0 1 24 4.5v9h-7.5V1Z" transform="translate(0 2)"/><path d="M6.5 13.5h19v7A9.5 9.5 0 0 1 16 30h-.5A9.5 9.5 0 0 1 6 20.5v-7h.5Z"/><path d="M15.8 0v8" transform="translate(0 4)"/></svg></span>
+          <span class="brand-word">mouse<span>link</span></span>
+        </a>
+        <div class="topbar-right"><span class="privacy-pill"><span class="privacy-dot"></span> PRIVATE SESSION</span><button class="icon-button" id="open-remote" aria-label="Open phone remote view" title="Open remote view"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/></svg></button></div>
+      </header>
+
+      <main class="host-main">
+        <section class="host-intro">
+          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR DESK, UNWIRED</div>
+          <h1>Your phone.<br /><span>Your new mouse.</span></h1>
+          <p class="intro-copy">A smooth, full-size touchpad that lives in your pocket. Connect once, and your fingers do the rest.</p>
+          <div class="host-meta"><span class="meta-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="12" rx="1.5"/><path d="M2.5 20h19M9 16l-1.2 4m7.2-4 1.2 4"/></svg></span><span id="host-name">Waiting for your desktop…</span><span class="meta-separator">·</span><span id="platform-name">Desktop host</span></div>
+          <div class="feature-row"><div><span class="feature-check">✓</span> No account needed</div><div><span class="feature-check">✓</span> Your network only</div><div><span class="feature-check">✓</span> Ready in seconds</div></div>
+        </section>
+
+        <section class="connect-card" aria-labelledby="connect-title">
+          <div class="card-heading"><div><div class="card-kicker">PAIR YOUR PHONE</div><h2 id="connect-title">Make the connection</h2></div><span class="device-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/></svg></span></div>
+          <div class="step-list">
+            <div class="step"><span class="step-number">01</span><div class="step-content"><strong>Open this address on your phone</strong><div class="address-box"><span class="address-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18m-5-5 5 5 5-5M7 8l5-5 5 5" transform="rotate(180 12 12)"/><path d="M4 12h16"/></svg></span><code id="host-url">Finding your local address…</code><select class="host-address-select" id="host-address-select" aria-label="Choose a computer network address" hidden></select><button class="copy-button" id="copy-url" aria-label="Copy address">COPY</button></div><span class="step-hint">Phone and computer must share a reachable local network.</span></div></div>
+            <div class="step"><span class="step-number">02</span><div class="step-content"><strong>Enter your one-time pairing PIN</strong><div class="pin-display" id="pin-display"><span>—</span><span>—</span><span>—</span><span>—</span><span>—</span><span>—</span></div><span class="step-hint">Shown only on this computer. Changes every time you start.</span></div></div>
+          </div>
+          <div class="session-footer"><div class="session-indicator"><span class="session-led" id="session-led"></span><span id="session-state">Waiting for a phone</span></div><div class="session-device"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/></svg><span id="connection-count">0 devices</span></div></div>
+        </section>
+
+        <section class="how-card"><div class="how-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 9.5v-3a4.5 4.5 0 0 1 9 0v3m-9 0a4.5 4.5 0 0 0 9 0m-9 0v3a4.5 4.5 0 0 0 9 0v-3m-4.5-6v6"/></svg></div><div><strong>Natural gestures. Precise control.</strong><p>Slide to move · tap to click · two fingers to scroll</p></div><a href="/remote" class="text-link">Preview controls <span>↗</span></a></section>
+
+        <section class="remote-setup" aria-labelledby="remote-setup-title">
+          <div class="remote-setup-head"><div><div class="card-kicker">CONTROL FROM ANYWHERE</div><h2 id="remote-setup-title">Start a remote session</h2></div><span class="remote-setup-icon">↗</span></div>
+          <p class="remote-setup-copy">Connect this computer to the public MouseLink relay. Your phone can then join from another network.</p>
+          <div class="remote-setup-form"><label for="relay-url-input">PUBLIC MOUSELINK WEBSITE URL<input id="relay-url-input" type="url" placeholder="https://your-project.vercel.app" autocomplete="url" /></label><button class="remote-start-button" id="remote-start-button">Start remote session <span>↗</span></button></div>
+          <div class="remote-setup-error" id="remote-setup-error" role="status"></div>
+          <div class="remote-session-details" id="remote-session-details" hidden><div class="remote-session-status"><i id="remote-session-dot"></i><span id="remote-session-state">Connecting to relay…</span></div><div class="remote-session-values"><div><small>SESSION CODE</small><strong id="remote-session-code">────────────</strong></div><div><small>PAIRING PIN</small><strong id="remote-session-pin">──────</strong></div></div><a href="#" id="remote-session-link" target="_blank" rel="noopener">Open phone remote <span>↗</span></a></div>
+          <div class="remote-setup-foot"><span>⌑</span> Encrypted WSS relay · Desktop must stay online</div>
+        </section>
+        <footer class="host-footer"><span>MouseLink <span class="footer-sep">/</span> Made for the way you work.</span><span class="host-footer-right"><span class="footer-lock">⌑</span> Local or remote pairing</span></footer>
+      </main>
+    </div>
+
+    <div class="remote-app" id="remote-app">
+      <header class="remote-header">
+        <a class="brand remote-brand" href="/" aria-label="MouseLink home"><span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 4.5a3.5 3.5 0 0 1 3.5-3.5h3v12.5H8V4.5Zm8.5-3.5h4A3.5 3.5 0 0 1 24 4.5v9h-7.5V1Z" transform="translate(0 2)"/><path d="M6.5 13.5h19v7A9.5 9.5 0 0 1 16 30h-.5A9.5 9.5 0 0 1 6 20.5v-7h.5Z"/></svg></span><span class="brand-word">mouse<span>link</span></span></a>
+        <div class="remote-status" id="remote-status"><span class="status-dot"></span><span id="remote-status-text">NOT CONNECTED</span></div>
+      </header>
+
+      <main class="remote-main">
+        <section class="pair-view" id="pair-view">
+          <div class="remote-overline"><span class="overline-line"></span> YOUR PHONE, REIMAGINED</div>
+          <h1>A mouse that<br /><span>moves with you.</span></h1>
+          <p class="remote-lede">Connect to your computer, then use the touchpad below to take control.</p>
+          <div class="pair-panel">
+            <div class="pair-panel-title"><span class="pair-step-icon">01</span><div><strong>Find your desktop</strong><span>Open the local address shown in MouseLink on your computer.</span></div></div>
+            <label class="field-label" for="pin-input">SIX-DIGIT PAIRING PIN</label>
+            <div class="pin-input-wrap"><input id="pin-input" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" aria-label="Six digit pairing PIN" /><span class="lock-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span></div>
+            <button class="primary-button" id="connect-button"><span>Connect to desktop</span><span class="button-arrow">↗</span></button>
+            <div class="connect-error" id="connect-error" role="status"></div>
+            <div class="connection-methods"><div class="method-heading">CONNECTION OPTIONS</div><div class="method-row"><span class="method-icon wifi-icon">⌁</span><div><strong>Wi-Fi</strong><span>Best experience. Join the same private network.</span></div><span class="method-tag">RECOMMENDED</span></div><div class="method-row"><span class="method-icon usb-icon">⌁</span><div><strong>USB cable</strong><span>Use USB networking only if your phone and computer can reach the same local address.</span></div></div><div class="method-row"><span class="method-icon bt-icon">ᛒ</span><div><strong>Bluetooth</strong><span>Use Bluetooth PAN if both devices share a reachable local network.</span></div></div><p class="method-note">A USB cable or Bluetooth pairing alone does not turn a browser into a hardware mouse. Direct HID needs a native phone app.</p></div>
+          </div>
+          <div class="remote-reassurance"><span>◉</span> Private and local · No account · No cloud</div>
+        </section>
+
+        <section class="control-view" id="control-view" hidden>
+          <div class="control-topline"><div><div class="control-overline">CONNECTED TO</div><div class="connected-host" id="connected-host">Your desktop</div></div><button class="disconnect-button" id="disconnect-button">Disconnect</button></div>
+          <div class="touchpad-wrap"><div class="touchpad-head"><span class="touchpad-label">TOUCHPAD</span><span class="gesture-hint"><span class="gesture-dots">··</span> slide to move · two fingers to scroll</span></div><div class="touchpad" id="touchpad" aria-label="Mouse touchpad"><div class="touchpad-grid"></div><div class="touchpad-mark"><span></span><span></span><span></span></div><div class="touchpad-help">MOVE YOUR FINGER TO CONTROL THE CURSOR</div></div><div class="touchpad-bottom"><span><i class="pad-dot"></i> POINTER READY</span><span id="sensitivity-value">SPEED 1.2×</span></div></div>
+          <div class="mouse-controls"><button class="click-button left-click" id="left-click" aria-label="Left mouse button"><span class="mouse-glyph"><i></i><i></i></span><span class="click-name">LEFT CLICK</span></button><button class="click-button middle-click" id="middle-click" aria-label="Middle mouse button"><span class="middle-glyph">●</span><span class="click-name">MIDDLE</span></button><button class="click-button right-click" id="right-click" aria-label="Right mouse button"><span class="mouse-glyph"><i></i><i></i></span><span class="click-name">RIGHT CLICK</span></button></div>
+          <div class="tool-row"><div class="tool-group"><button class="tool-button" id="keyboard-toggle"><span class="tool-icon">⌨</span><span>Keyboard</span><span class="tool-chevron">⌄</span></button><button class="tool-button scroll-toggle" id="scroll-toggle" aria-pressed="false"><span class="tool-icon">↕</span><span>Scroll</span></button></div><label class="speed-control"><span>POINTER SPEED</span><input id="sensitivity" type="range" min="0.5" max="2.5" step="0.1" value="1.2" aria-label="Pointer speed" /><span class="speed-number" id="speed-number">1.2×</span></label></div>
+          <div class="keyboard-panel" id="keyboard-panel" hidden><div class="keyboard-input-row"><input id="keyboard-input" type="text" maxlength="100" placeholder="Type on your computer…" autocomplete="off" /><button class="send-text" id="send-text">Send</button></div><div class="special-keys"><button data-key="ESCAPE">ESC</button><button data-key="TAB">TAB</button><button data-key="BACKSPACE">⌫</button><button data-key="ARROWUP">↑</button><button data-key="ARROWLEFT">←</button><button data-key="ARROWDOWN">↓</button><button data-key="ARROWRIGHT">→</button><button data-key="ENTER">ENTER ↵</button></div></div>
+          <div class="remote-bottom-note"><span class="secure-mark">⌑</span> Your phone is controlling this desktop locally.</div>
+        </section>
+      </main>
+      <div class="remote-toast" id="remote-toast" role="status"></div>
+    </div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

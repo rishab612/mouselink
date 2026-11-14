@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#111711" />
+  <title>Privacy — MouseLink</title>
+  <link rel="icon" href="/remote/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/site.css" />
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="/" aria-label="MouseLink home"><span class="brand-mark">⌁</span><span>mouse<span>link</span></span></a>
+    <nav><a href="/#downloads">Downloads</a><a class="nav-cta" href="/remote/">Open remote <span>↗</span></a></nav>
+  </header>
+  <main class="legal-page">
+    <div class="eyebrow"><i></i> MOUSELINK</div>
+    <h1>Privacy, in plain words.</h1>
+    <p class="legal-updated">Last updated: November 14, 2026</p>
+    <section><h2>What MouseLink handles</h2><p>When you create a remote session, the desktop app connects to the MouseLink relay. Your phone joins that session using the 12-character session code and six-digit PIN. The relay forwards mouse, scroll, and optional keyboard events to the desktop.</p></section>
+    <section><h2>What is stored for a session</h2><p>The relay stores a hash of the session PIN and a short-lived failed-attempt counter. It does not store the mouse or keyboard event stream in the application code. The session state is cleared after the desktop host disconnects and the short cleanup period ends.</p></section>
+    <section><h2>Connection details</h2><p>Remote browser and desktop connections use HTTPS and secure WebSockets (WSS). The relay must read event messages to forward them, so this is transport encryption, not end-to-end encryption. Do not use the keyboard panel to send passwords or other sensitive text.</p></section>
+    <section><h2>Accounts and tracking</h2><p>MouseLink does not create user accounts, set advertising cookies, or include analytics code. Vercel hosts the public website and its download API. Cloudflare operates the realtime relay, and GitHub provides release information and downloadable build artifacts. These providers may process connection information under their own terms and privacy policies.</p></section>
+    <section><h2>Your control</h2><p>Stop the desktop host or disconnect the phone to end a session. The host accepts one phone at a time. The local desktop dashboard is meant to remain on the computer and should not be published to the internet.</p></section>
+    <a class="legal-back" href="/">← Back to MouseLink</a>
+  </main>
+  <footer class="footer"><a class="brand" href="/"><span class="brand-mark">⌁</span><span>mouse<span>link</span></span></a><span>Made to move with you.</span><a href="https://github.com/rishab612/mouselink" target="_blank" rel="noopener">View the project on GitHub ↗</a></footer>
+</body>
+</html>
