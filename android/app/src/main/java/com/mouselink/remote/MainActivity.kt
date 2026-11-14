@@ -98,7 +98,7 @@ class MainActivity : Activity() {
     private fun showRemote(site: String) {
         val view = WebView(this)
         webView = view
-        view.setBackgroundColor(background)
+        view.setBackgroundColor(screenBackground)
         view.settings.javaScriptEnabled = true
         view.settings.domStorageEnabled = true
         view.settings.allowFileAccess = false
