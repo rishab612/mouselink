@@ -18,15 +18,16 @@ import java.net.URI
 class MainActivity : Activity() {
     private var webView: WebView? = null
     private lateinit var siteField: EditText
-    private val background = Color.rgb(17, 23, 17)
-    private val foreground = Color.rgb(244, 242, 233)
-    private val lime = Color.rgb(216, 250, 113)
+    private val screenBackground = Color.rgb(17, 23, 17)
+    private val textForeground = Color.rgb(244, 242, 233)
+    private val accentColor = Color.rgb(216, 250, 113)
+    private val productionSite = "https://mouselink-ecru.vercel.app"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = background
-        window.navigationBarColor = background
-        val savedUrl = getSharedPreferences("mouselink", MODE_PRIVATE).getString("site", "") ?: ""
+        window.statusBarColor = screenBackground
+        window.navigationBarColor = screenBackground
+        val savedUrl = getSharedPreferences("mouselink", MODE_PRIVATE).getString("site", productionSite) ?: productionSite
         if (savedUrl.isNotBlank() && savedInstanceState != null) {
             showRemote(savedUrl)
         } else {
@@ -39,17 +40,17 @@ class MainActivity : Activity() {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(26), dp(34), dp(26), dp(24))
             gravity = Gravity.CENTER_VERTICAL
-            setBackgroundColor(background)
+            setBackgroundColor(screenBackground)
         }
         page.addView(TextView(this).apply {
             text = "⌁  MouseLink"
             textSize = 22f
-            setTextColor(lime)
+            setTextColor(accentColor)
         })
         page.addView(TextView(this).apply {
             text = "Your phone. Your new mouse."
             textSize = 28f
-            setTextColor(foreground)
+            setTextColor(textForeground)
             setPadding(0, dp(28), 0, dp(8))
         })
         page.addView(TextView(this).apply {
@@ -60,9 +61,9 @@ class MainActivity : Activity() {
         siteField = EditText(this).apply {
             setSingleLine(true)
             setText(savedUrl)
-            hint = "https://your-mouselink-site.workers.dev"
+            hint = productionSite
             setHintTextColor(Color.rgb(111, 120, 104))
-            setTextColor(foreground)
+            setTextColor(textForeground)
             textSize = 14f
             setPadding(dp(14), dp(12), dp(14), dp(12))
             setBackgroundColor(Color.rgb(31, 39, 29))
@@ -70,8 +71,8 @@ class MainActivity : Activity() {
         page.addView(siteField, LinearLayout.LayoutParams(-1, dp(52)).apply { topMargin = dp(24) })
         page.addView(Button(this).apply {
             text = "Open phone remote"
-            setTextColor(background)
-            setBackgroundColor(lime)
+            setTextColor(screenBackground)
+            setBackgroundColor(accentColor)
             setOnClickListener { openRemote() }
         }, LinearLayout.LayoutParams(-1, dp(50)).apply { topMargin = dp(12) })
         page.addView(TextView(this).apply {

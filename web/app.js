@@ -175,7 +175,7 @@
     }
     loadHostStatus();
     state.hostPoll = setInterval(loadHostStatus, 1800);
-    $("#relay-url-input").value = localStorage.getItem("mouselink-site-url") || "";
+    $("#relay-url-input").value = localStorage.getItem("mouselink-site-url") || "https://mouselink-ecru.vercel.app";
     $("#remote-start-button").addEventListener("click", async () => {
       const siteUrl = $("#relay-url-input").value.trim().replace(/\/+$/, "");
       $("#remote-setup-error").textContent = "";
